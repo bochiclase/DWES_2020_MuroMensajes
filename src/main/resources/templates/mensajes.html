@@ -38,10 +38,12 @@
 				      <tr class="thead-dark">
 				        <th>Id</th>
 				        <th>Texto</th>
+				        <th></th>
 				      </tr>
 				      <tr th:each="mensaje: ${mensajes}">
 				        <td th:text="${mensaje.id}"></td>
 				        <td th:text="${mensaje.texto}"></td>
+				        <td><a type="button" class="btn btn-danger btn-sm" th:href="@{/mensajes/borrar/{id}(id=${mensaje.id})}">Eliminar</a></td>
 				      </tr>
 				    </table>
 			  </div>

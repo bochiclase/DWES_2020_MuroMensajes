@@ -8,8 +8,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
+
 
 
 
@@ -37,7 +39,7 @@ public class MensajeRutas {
 	
 	
 	@PostMapping("/mensajes/anadir")
-	public String carpetas(@ModelAttribute Mensaje mensaje) {
+	public String mensajesAnadir(@ModelAttribute Mensaje mensaje) {
 		
 		mensajeDAO.save(mensaje);
 		
@@ -47,6 +49,20 @@ public class MensajeRutas {
 	
 	
 	
+	@GetMapping("/mensajes/borrar/{id}")
+	public String mensajesBorrar(@PathVariable long id) {
+		
+		// versión 1
+		Mensaje mensaje = mensajeDAO.findById(id).get();
+		mensajeDAO.delete(mensaje);
+		
+		// versión 2
+		mensajeDAO.deleteById(id);
+	
+
+		
+		return "redirect:/mensajes";
+	}
 	
 	
 	
