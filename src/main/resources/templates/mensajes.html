@@ -26,7 +26,7 @@
   <!-- Header -->
   <header class="masthead">
     <div class="container">
-      <div class="intro-text">
+      <div class="intro-text col-8">
         
         <div class="mb-5"> <!--  mis datos -->
 			<div th:switch="${#lists.isEmpty(mensajes)}">
@@ -49,13 +49,50 @@
         </div><!--  fin de mis datos -->
         
       </div>
+      <div class="col-2 float-right">
+        <div class="p-5">
+			<button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#crearMensaje" >
+				Nuevo mensaje
+			</button>
+        </div>
+      </div> 
     </div>
   </header>
 
 
 
 
-  
+  		<!-- Añadir carpeta modal -->
+		  <div class="modal fade" id="crearMensaje" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		    <div class="modal-dialog" role="document">
+		      <div class="modal-content">
+		        <div class="modal-header">
+		          <h4 class="modal-title" id="exampleModalLabel">Nuevo mensaje</h4>
+		          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+		            <span aria-hidden="true">×</span>
+		          </button>
+		        </div>
+
+                <form action="#" th:action="@{/mensajes/anadir}" th:object="${mensaje}" method="post">
+			        <div class="modal-body">
+			        
+						  <div class="form-row">
+						    <div class="form-group col-md-12">
+						      <label for="texto">Texto</label>
+						      <input type="text" th:field="*{texto}"  placeholder="inserta un texto" class="form-control" id="texto">
+						    </div>
+		                  </div>
+			        </div>
+			        <div class="modal-footer">
+		                <input type="submit" value="Añadir" class="btn btn-primary float-right">
+		                <button data-dismiss="modal" class="btn btn-outline-danger float-right mr-2">Cancelar</button>
+			        </div>
+                </form>
+		      </div>
+		    </div>
+		  </div>
+
+		<!-- Añadir carpeta modal -->
 
 
 

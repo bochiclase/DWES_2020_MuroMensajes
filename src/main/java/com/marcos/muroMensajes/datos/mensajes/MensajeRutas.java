@@ -7,7 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
+
+
 
 @Controller
 public class MensajeRutas {
@@ -19,9 +23,9 @@ public class MensajeRutas {
 	@GetMapping("/mensajes")
 	public ModelAndView todosLosMensajes() {
 		
-		
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("mensajes");
+		mav.addObject("mensaje",new Mensaje());
 		
 		List<Mensaje> listaMensajes = (List<Mensaje>)mensajeDAO.findAll();
 		mav.addObject("mensajes",listaMensajes);
@@ -31,6 +35,14 @@ public class MensajeRutas {
 	
 	
 	
+	
+	@PostMapping("/mensajes/anadir")
+	public String carpetas(@ModelAttribute Mensaje mensaje) {
+		
+		mensajeDAO.save(mensaje);
+		
+		return "redirect:/mensajes";
+	}
 	
 	
 	
