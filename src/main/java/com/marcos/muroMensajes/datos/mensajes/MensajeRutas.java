@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -38,6 +37,7 @@ public class MensajeRutas {
 	
 	
 	
+	
 	@PostMapping("/mensajes/anadir")
 	public String mensajesAnadir(@ModelAttribute Mensaje mensaje) {
 		
@@ -49,17 +49,11 @@ public class MensajeRutas {
 	
 	
 	
+	
 	@GetMapping("/mensajes/borrar/{id}")
 	public String mensajesBorrar(@PathVariable long id) {
 		
-		// versión 1
-		Mensaje mensaje = mensajeDAO.findById(id).get();
-		mensajeDAO.delete(mensaje);
-		
-		// versión 2
 		mensajeDAO.deleteById(id);
-	
-
 		
 		return "redirect:/mensajes";
 	}
