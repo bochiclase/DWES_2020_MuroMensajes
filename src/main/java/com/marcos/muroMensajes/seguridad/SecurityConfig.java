@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.marcos.muroMensajes.servicios.Autenticacion;
@@ -30,7 +31,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         
     	DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-        provider.setPasswordEncoder(passwordEncoder);
+        provider.setPasswordEncoder(new BCryptPasswordEncoder());
         provider.setUserDetailsService(autenticacion);
     	
     	auth.authenticationProvider(provider);
@@ -46,14 +47,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	        .anyRequest().authenticated()
 	        .and()    	
         .formLogin()
-            .loginPage("/login")
             .permitAll()
             .defaultSuccessUrl("/")
             .failureUrl("/login?error=true")
-            .usernameParameter("username")
-            .passwordParameter("password")
             .and()
-            .csrf().disable()
         .logout()
             .permitAll()
             .logoutSuccessUrl("/login?logout");
