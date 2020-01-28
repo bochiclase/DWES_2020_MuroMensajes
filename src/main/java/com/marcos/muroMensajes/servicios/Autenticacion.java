@@ -1,17 +1,19 @@
 package com.marcos.muroMensajes.servicios;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.marcos.muroMensajes.datos.usuarios.UsuarioDAO;
 
-//@Service
-public class Autenticacion 
-//implements UserDetailsService 
+@Service
+public class Autenticacion implements UserDetailsService 
+
 {
 
-	/*
+
 	@Autowired
 	private UsuarioDAO usuarioDAO;
 		
@@ -23,6 +25,4 @@ public class Autenticacion
 		return usuarioDAO.findById(username).get();
 	}
 	
-	*/
-
 }
