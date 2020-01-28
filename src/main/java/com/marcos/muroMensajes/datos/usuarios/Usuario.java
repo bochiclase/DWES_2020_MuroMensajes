@@ -8,11 +8,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+
 
 @Entity
-public class Usuario implements UserDetails  {
+public class Usuario 
+//implements UserDetails  
+
+{
 
 	
 	@Id
@@ -77,7 +79,7 @@ public class Usuario implements UserDetails  {
 	
 	
 	
-	
+/*	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		// TODO Auto-generated method stub
@@ -115,7 +117,7 @@ public class Usuario implements UserDetails  {
 	}
 	
 
-	
+	*/
 	
 	
 	

@@ -25,6 +25,9 @@
 
   <!-- Header -->
   <header class="masthead">
+  	<div sec:authorize="isAuthenticated()">
+    	User: <span sec:authentication="name">miquel</span>
+	</div>
     <div class="row p-5">
       <div class="col-6">
 			<button type="button">
