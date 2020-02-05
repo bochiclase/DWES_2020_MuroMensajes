@@ -1,15 +1,33 @@
 package com.marcos.muroMensajes.datos.usuarios;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.ListIterator;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import com.marcos.muroMensajes.roles.Rol;
+
+import javassist.bytecode.Descriptor.Iterator;
 
 
 
@@ -17,6 +35,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 public class Usuario implements UserDetails  {
 
 	
+
+
 	@Id
 	private String usuario;
 	
@@ -34,8 +54,50 @@ public class Usuario implements UserDetails  {
 
 	
 	
+	@ManyToMany(fetch=FetchType.EAGER)
+	@JoinTable(name = "permisos",
+			  joinColumns = @JoinColumn(name = "FK_usuarios"), 
+			  inverseJoinColumns = @JoinColumn(name = "FK_roles"))
+	private List<Rol> roles = new ArrayList<Rol>();	
 	
 	
+	
+	
+	
+	private boolean estaUnRol(String unRol) {
+		
+		boolean esta = false;
+		ListIterator<Rol>  it = roles.listIterator();
+		while((it.hasNext())&&(!esta)) {
+			
+			Rol rol = it.next();
+			if(rol.getRol().matches(unRol)) esta = true;
+		}
+		return esta;
+	}
+	
+	
+	public void addRol(String unRol) {
+		
+		if(!estaUnRol(unRol)) {
+			
+			Rol rol = new Rol();
+			rol.setRol(unRol);
+			rol.addUsuario(this);
+			
+			roles.add(rol);
+		}
+	}
+	
+	
+	public List<Rol> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(List<Rol> roles) {
+		this.roles = roles;
+	}
+
 	public String getUsuario() {
 		return usuario;
 	}
@@ -82,7 +144,14 @@ public class Usuario implements UserDetails  {
 	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return null;
+
+		Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
+	    for (Rol rol : roles){
+	        grantedAuthorities.add(new SimpleGrantedAuthority(rol.getRol()));
+	    }
+	    
+	    return grantedAuthorities;
+		
 	}
 
 	@Override
@@ -109,9 +178,9 @@ public class Usuario implements UserDetails  {
 	public boolean isEnabled() {
 		return true;
 	}
-	
-	
-	
+
+
+
 	
 
 	

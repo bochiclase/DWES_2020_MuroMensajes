@@ -39,13 +39,26 @@
 				        <th>Usuario</th>
 				        <th>Nombre</th>
 				        <th>Apellidos</th>
+				        <th>Permisos</th>
+				        <th></th>
 				        <th></th>
 				      </tr>
 				      <tr th:each="user: ${usuarios}">
 				        <td th:text="${user.usuario}"></td>
 				        <td th:text="${user.nombre}"></td>
 				        <td th:text="${user.apellidos}"></td>
-				        <td><a type="button" class="btn btn-danger btn-sm" th:href="@{/usuarios/borrar/{id}(id=${user.usuario})}">Eliminar</a></td>
+				        <td>
+				        	<li th:remove="tag" th:each="permiso: ${user.roles}">
+							    <span th:remove="tag" 
+						        th:text="${permiso.rol}"/>
+							</li>
+				        </td>
+				        <td>
+				        	<a type="button" class="btn btn-primary btn-sm" th:href="@{/usuarios/editar/{id}(id=${user.usuario})}">Editar</a>
+						</td>
+				        <td>
+				        	<a type="button" class="btn btn-danger btn-sm" th:href="@{/usuarios/borrar/{id}(id=${user.usuario})}">Eliminar</a>
+				        </td>
 				      </tr>
 				    </table>
 			  </div>
@@ -56,7 +69,7 @@
       <div class="col-3 float-right">
         <div class="p-5">
 			<button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#crearMensaje" >
-				Nuevo mensaje
+				Nuevo usuario
 			</button>
         </div>
       </div> 
@@ -107,6 +120,21 @@
 					      <input type="text" th:field="*{apellidos}"  placeholder="inserta un texto" class="form-control" id="texto">
 					    </div>
 	                  </div>
+	                  
+					  <div class="form-row">
+					    <div class="form-group col-md-12">
+					      <label for="texto">Permisos</label>
+							<ul>
+							  <li th:each="permiso: ${roles}">
+							    <input type="checkbox" 
+							        th:field="*{roles}" 
+							        th:value="${permiso.rol}"  
+							        th:text="${permiso.rol}"/>
+					        
+							  </li>
+							</ul>					      
+						  </div>
+	                  </div>	                  
 
 
 			        </div>
