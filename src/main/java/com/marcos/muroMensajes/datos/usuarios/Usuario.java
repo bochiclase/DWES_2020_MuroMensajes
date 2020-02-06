@@ -16,6 +16,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.JoinColumn;
 
@@ -52,50 +53,19 @@ public class Usuario implements UserDetails  {
 	@Column
 	private String email;
 
-	
-	
-	@ManyToMany(fetch=FetchType.EAGER)
-	@JoinTable(name = "permisos",
-			  joinColumns = @JoinColumn(name = "FK_usuarios"), 
-			  inverseJoinColumns = @JoinColumn(name = "FK_roles"))
-	private List<Rol> roles = new ArrayList<Rol>();	
+	@ManyToOne
+	private Rol rol = new Rol();	
 	
 	
 	
+
 	
-	
-	private boolean estaUnRol(String unRol) {
-		
-		boolean esta = false;
-		ListIterator<Rol>  it = roles.listIterator();
-		while((it.hasNext())&&(!esta)) {
-			
-			Rol rol = it.next();
-			if(rol.getRol().matches(unRol)) esta = true;
-		}
-		return esta;
-	}
-	
-	
-	public void addRol(String unRol) {
-		
-		if(!estaUnRol(unRol)) {
-			
-			Rol rol = new Rol();
-			rol.setRol(unRol);
-			rol.addUsuario(this);
-			
-			roles.add(rol);
-		}
-	}
-	
-	
-	public List<Rol> getRoles() {
-		return roles;
+	public Rol getRol() {
+		return rol;
 	}
 
-	public void setRoles(List<Rol> roles) {
-		this.roles = roles;
+	public void setRoles(Rol rol) {
+		this.rol = rol;
 	}
 
 	public String getUsuario() {
@@ -145,14 +115,12 @@ public class Usuario implements UserDetails  {
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 
-		Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
-	    for (Rol rol : roles){
-	        grantedAuthorities.add(new SimpleGrantedAuthority(rol.getRol()));
-	    }
-	    
+		List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
+	    grantedAuthorities.add(new SimpleGrantedAuthority(rol.getNombre()));
+	    	    
 	    return grantedAuthorities;
-		
 	}
+	
 
 	@Override
 	public String getUsername() {

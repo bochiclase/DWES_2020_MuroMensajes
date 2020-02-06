@@ -3,13 +3,14 @@ package com.marcos.muroMensajes.roles;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-
+import javax.persistence.OneToMany;
 
 import com.marcos.muroMensajes.datos.usuarios.Usuario;
 
@@ -21,18 +22,24 @@ public class Rol   {
 
 	
 	@Id
-	private String rol;
+	private String nombre;
 	
 	
-	@ManyToMany(fetch=FetchType.EAGER)
-	@JoinTable(	name = "permisos",
-	  			joinColumns = @JoinColumn(name = "FK_roles"), 
-	  			inverseJoinColumns = @JoinColumn(name = "FK_usuarios"))
+	@OneToMany(fetch=FetchType.EAGER, mappedBy = "rol")
 	private List<Usuario> usuarios = new ArrayList<Usuario>();
 
 	
 	
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	public void addUsuario(Usuario usuario) {
@@ -43,6 +50,9 @@ public class Rol   {
 		}
 	}	
 
+
+
+
 	public List<Usuario> getUsuarios() {
 		return usuarios;
 	}
@@ -52,17 +62,17 @@ public class Rol   {
 	}
 
 
-	public String getRol() {
-		return rol;
+	public String getNombre() {
+		return nombre;
 	}
 
-	public void setRol(String rol) {
-		this.rol = rol;
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
 	}
 
 	@Override
 	public String toString() {
-		return "Rol [rol=" + rol + "]";
+		return "Rol [rol=" + nombre + "]";
 	}
 
 

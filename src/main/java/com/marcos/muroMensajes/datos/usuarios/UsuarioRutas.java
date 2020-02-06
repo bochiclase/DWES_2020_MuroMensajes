@@ -59,7 +59,16 @@ public class UsuarioRutas {
 		return "redirect:/usuarios";
 	}
 	
+
 	
+	@PostMapping("/usuarios/editar")
+	public String usuariosEditar(@ModelAttribute Usuario usuario) {
+		
+
+		usuarioDAO.save(usuario);
+		
+		return "redirect:/usuarios";
+	}	
 
 	
 	@GetMapping("/usuarios/editar/{id}")
@@ -72,12 +81,15 @@ public class UsuarioRutas {
 		mav.addObject("user",user);
 		
 		List<Rol> listaRoles = (List<Rol>)rolDAO.findAll();
-		mav.addObject("rolex",listaRoles);
+		mav.addObject("roles",listaRoles);
 		
 		return mav;
 	}	
 	
 
+	
+	
+	
 
 	@GetMapping("/usuarios/borrar/{id}")
 	public String usuariosBorrar(@PathVariable String id) {

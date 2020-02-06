@@ -24,14 +24,8 @@ public class RutasGenericas {
 	@GetMapping("/")
 	public String inicial(Authentication authentication) {
 		
-		
-	    Iterator<GrantedAuthority> it = (Iterator<GrantedAuthority>) authentication.getAuthorities().iterator(); 
-	    while(it.hasNext()) {
-	        
-	    	GrantedAuthority string = it.next();
-	        System.out.println(string.getAuthority());
-	    }
-		
+		System.out.println(authentication.isAuthenticated());
+		System.out.println(authentication.getName());
 		
 		return "index";
 	}
