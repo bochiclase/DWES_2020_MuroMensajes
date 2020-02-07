@@ -22,7 +22,7 @@ public class Rol   {
 
 	
 	@Id
-	private String nombre;
+	private String nombre = "USER";
 	
 	
 	@OneToMany(fetch=FetchType.EAGER, mappedBy = "rol")
