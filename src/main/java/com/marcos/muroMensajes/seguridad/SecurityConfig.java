@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -37,17 +38,30 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter  {
 
 
     
-	/*   
+  
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-    	http.authorizeRequests()
-        .anyRequest().authenticated()
-        .and()
+    	http
+        .authorizeRequests()
+        	.antMatchers("/usuarios").permitAll()
+        	.antMatchers("/mensajes/**").authenticated()
+        	.antMatchers("/usuarios/**").hasAuthority("ADMIN")
+        	.antMatchers("/usuarios/anadir").hasAnyAuthority("ADMIN","MODERADOR")
+	        .and()    	
         .formLogin()
-        .and()
-        .httpBasic();
+            .loginPage("/login").permitAll()
+            .defaultSuccessUrl("/")
+            .failureUrl("/login?error=true")
+            .usernameParameter("username")
+            .passwordParameter("password")
+            .and()
+        .logout()
+        	.permitAll()
+            .logoutUrl("/logout")
+            .logoutSuccessUrl("/login")
+            .and()
+        .csrf().disable();
 
     }
-    
-    */
+
 }

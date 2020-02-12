@@ -25,6 +25,11 @@
 
   <!-- Header -->
   <header class="masthead">
+  
+	<div th:if="${session.carrito}">
+    	<p>Tienes <span th:remove="tag" th:text="${session.carrito.productos}"></span> producto(s)</p>
+	</div>
+	
     <div class="row p-5">
       <div class="col-8">
         
@@ -51,27 +56,11 @@
 				        <td th:text="${user.nombre}"></td>
 				        <td th:text="${user.apellidos}"></td>
 				        <td th:text="${user.rol.nombre}"></td>
-				        
-				        
-				        
-				        
-				        
-				        
-				        
-				        
-				        
 				        <td >
 				        	<span th:remove="tag" th:if=" (${#authorization.expression('hasAnyAuthority(''ADMIN'',''MODERADOR'')')}) or (${#authentication.name} == ${user.usuario})">
 					        	<a type="button" class="btn btn-primary btn-sm" th:href="@{/usuarios/editar/{id}(id=${user.usuario})}">Editar</a>
 							</span>
 						</td>
-						
-						
-						
-						
-						
-						
-						
 				        <td>
 				        	<a type="button" class="btn btn-danger btn-sm" th:href="@{/usuarios/borrar/{id}(id=${user.usuario})}">Eliminar</a>
 				        </td>
@@ -84,10 +73,15 @@
       </div>
       <div class="col-3 float-right">
         <div class="p-5">
-			<button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#crearMensaje" >
-				Nuevo usuario
-			</button>
+	       	<span th:remove="tag" th:if=" (${#authorization.expression('hasAnyAuthority(''ADMIN'',''MODERADOR'')')})">
+				<button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#crearMensaje" >
+					Nuevo usuario
+				</button>
+			</span>
         </div>
+        <div class="p-5">
+			<a type="button" class="btn btn-secondary btn-sm" th:href="@{/addCarrito}">Añadir al carrito</a>
+        </div>        
       </div> 
     </div>
   </header>

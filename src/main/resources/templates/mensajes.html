@@ -17,21 +17,6 @@
 
  
  
-<script>
-
-	$(document).ready(function() {
-		$('#borrarUsuario').on('show.bs.modal', function(event) {
-			var button = $(event.relatedTarget) // Boton que activa el modal
-			var recipient = button.data('usuario') // Extrae la info del atributo data-*
-			// Actualizamos el contenido del modal.
-			var modal = $(this)
-			modal.find('.modal-title').text('Borrar usuario ' + recipient) // Cambio el titulo del modal
-			modal.find('.modal-body').replace('#username',recipient) // Coloco el id del usuario en el input oculto
-		})
-	})
-</script>  
-
-
 </head>
 
 <body id="page-top">
@@ -39,6 +24,12 @@
 
   <!-- Header -->
   <header class="masthead">
+
+	<div th:if="${session.carrito}">
+    	<p>Tienes <span th:remove="tag" th:text="${session.carrito.productos}"></span> producto(s)</p>
+	</div>
+ 
+ 
     <div class="row p-5">
       <div class="col-8">
         
@@ -95,6 +86,9 @@
 				Nuevo mensaje
 			</button>
         </div>
+        <div class="p-5">
+			<a type="button" class="btn btn-secondary btn-sm" th:href="@{/addCarrito}">Añadir al carrito</a>
+        </div>         
       </div> 
     </div>
   </header>

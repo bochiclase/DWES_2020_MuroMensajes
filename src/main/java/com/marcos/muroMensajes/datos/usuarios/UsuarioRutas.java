@@ -3,7 +3,13 @@ package com.marcos.muroMensajes.datos.usuarios;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.marcos.muroMensajes.roles.Rol;
 import com.marcos.muroMensajes.roles.RolDAO;
+import com.marcos.muroMensajes.sesiones.Carrito;
 
 
 
@@ -28,10 +35,14 @@ public class UsuarioRutas {
 	@Autowired
 	private RolDAO rolDAO;	
 	
+//	@Resource(name = "carrito")
+//    private Carrito carrito;
+	
 	
 	
 	@GetMapping("/usuarios")
-	public ModelAndView todosLosUsuarios() {
+	public ModelAndView todosLosUsuarios(HttpSession sesion) {
+		
 		
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("usuarios");
@@ -43,6 +54,7 @@ public class UsuarioRutas {
 		List<Rol> listaRoles = (List<Rol>)rolDAO.findAll();
 		mav.addObject("roles",listaRoles);
 
+		
 		return mav;
 	}
 	
@@ -72,7 +84,24 @@ public class UsuarioRutas {
 
 	
 	@GetMapping("/usuarios/editar/{id}")
-	public ModelAndView usuariosEditar(@PathVariable String id) {
+	public ModelAndView usuariosEditar(@PathVariable String id, Authentication authentication) {
+		
+		
+		
+		
+		String quien = authentication.getName();
+		List<GrantedAuthority> grantedAuthorities = (List<GrantedAuthority>)authentication.getAuthorities();
+		System.out.println(grantedAuthorities);
+		
+		if(!quien.equalsIgnoreCase(id)) {
+			
+			ModelAndView mav = new ModelAndView();
+			mav.setViewName("redirect:/usuarios");
+			
+			return mav;
+		}
+		
+		
 		
 		Usuario user = usuarioDAO.findById(id).get();
 		

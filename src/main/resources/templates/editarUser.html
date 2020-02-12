@@ -58,7 +58,7 @@
 			    </div>
                  </div>
                  
-			  <div class="form-row">
+			  <div th:if=" (${#authorization.expression('hasAnyAuthority(''ADMIN'',''MODERADOR'')')})" class="form-row">
 			    <div class="form-group col-md-12">
 			      <label for="texto">Permisos</label>
 					<ul>
@@ -75,6 +75,24 @@
 				  </div>
                  </div>	                  
 
+
+			<div th:if=" (${#authorization.expression('hasAnyAuthority(''USER'')')})" class="form-row">
+			    <div class="form-group col-md-12">
+			      <label for="texto">Permisos</label>
+					<ul>
+					  <li th:each="permiso: ${roles}">
+					    <input 
+					    	type="radio" 
+					    	disabled 
+					    	name="permisos" 
+					        th:text="${permiso.nombre}"
+					        th:field="*{rol.nombre}"
+					        th:value="${permiso.nombre}"
+					    />
+					  </li>
+					</ul>
+				  </div>
+                 </div>	    
 
 	        </div>
 	        <div class="modal-footer">
