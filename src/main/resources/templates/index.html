@@ -31,9 +31,6 @@
     	User: <span sec:authentication="name">miquel</span>
 	</div>
 	
-	<div th:if="${session.carrito}">
-    	<p>Tienes <span th:remove="tag" th:text="${session.carrito.productos}"></span> producto(s)</p>
-	</div>
 	
 	<ul class="nav-item" sec:authorize="hasAnyAuthority('ADMIN')">
 		<li>TIENES SUPERVISION ADMIN</li>

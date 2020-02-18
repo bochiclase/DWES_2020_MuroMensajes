@@ -15,8 +15,6 @@ import com.marcos.muroMensajes.datos.usuarios.Usuario;
 public class Autenticacion implements UserDetailsService 
 
 {
-
-
 	@Autowired
 	private UsuarioDAO usuarioDAO;
 		

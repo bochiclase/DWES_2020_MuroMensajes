@@ -18,6 +18,9 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import javax.persistence.JoinColumn;
 
 import org.hibernate.annotations.Fetch;
@@ -45,12 +48,16 @@ public class Usuario implements UserDetails  {
 	private String password;
 	
 	@Column
+	@Size(min=5, message="el nombre no puede ser pequeño")
+	@Size(max=10, message="el nombre no puede tal largo")
+	@NotNull(message="no puedes dejar esto vacio")
 	private String nombre;
 	
 	@Column
 	private String apellidos;
 	
 	@Column
+	@Pattern(regexp="[A-Za-z0-9._-]+@[A-Za-z.]+",message="email invalido")
 	private String email;
 
 	@ManyToOne
