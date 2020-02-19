@@ -55,7 +55,11 @@ public class Usuario implements UserDetails  {
 	
 	@Column
 	private String apellidos;
-	
+
+	@Column
+	private Integer edad;	
+
+
 	@Column
 	@Pattern(regexp="[A-Za-z0-9._-]+@[A-Za-z.]+",message="email invalido")
 	private String email;
@@ -116,6 +120,13 @@ public class Usuario implements UserDetails  {
 	}
 
 	
+	public Integer getEdad() {
+		return edad;
+	}
+
+	public void setEdad(Integer edad) {
+		this.edad = edad;
+	}	
 	
 	
 	
@@ -152,6 +163,11 @@ public class Usuario implements UserDetails  {
 	@Override
 	public boolean isEnabled() {
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "[usuario=" + usuario + ", edad=" + edad + "]";
 	}
 
 

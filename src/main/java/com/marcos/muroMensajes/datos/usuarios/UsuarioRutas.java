@@ -43,6 +43,25 @@ public class UsuarioRutas {
 	
 
 	
+	
+	@GetMapping("/consultas")
+	public String consultas() {
+		
+		List<Usuario> resultado = (List<Usuario>)usuarioDAO.findAll();
+		System.out.println(resultado);
+		
+		
+		
+		return "redirect:/";
+	}
+			
+	
+	
+	
+	
+	
+	
+	
 	@GetMapping("/usuarios")
 	public ModelAndView todosLosUsuarios(HttpSession sesion) {
 		
