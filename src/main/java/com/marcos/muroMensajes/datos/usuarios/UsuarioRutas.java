@@ -47,8 +47,11 @@ public class UsuarioRutas {
 	@GetMapping("/consultas")
 	public String consultas() {
 		
-		List<Usuario> resultado = (List<Usuario>)usuarioDAO.findAll();
+		List<Usuario> resultado = (List<Usuario>)usuarioDAO.findByEdad(10);
 		System.out.println(resultado);
+		
+		Integer cuantos = usuarioDAO.countByEdad(10);
+		System.out.println(cuantos);
 		
 		
 		

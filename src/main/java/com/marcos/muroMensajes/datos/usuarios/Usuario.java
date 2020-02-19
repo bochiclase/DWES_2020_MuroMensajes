@@ -18,6 +18,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.PostUpdate;
+import javax.persistence.PreUpdate;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -173,8 +175,18 @@ public class Usuario implements UserDetails  {
 
 
 	
-
+	@PreUpdate
+	public void antesDeUpdate() {
+		
+		System.out.println(this);
+	}
 	
+	
+	@PostUpdate
+	public void despuesDeUpdate() {
+		
+		System.out.println(this);
+	}	
 	
 	
 }
